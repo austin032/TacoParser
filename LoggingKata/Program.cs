@@ -35,18 +35,38 @@ namespace LoggingKata
 
             // TODO: Create two `ITrackable` variables with initial values of `null`. 
             // These will be used to store your two Taco Bells that are the farthest from each other.
-            
+            ITrackable point1 = null;
+            ITrackable point2 = null;
+
             // TODO: Create a `double` variable to store the distance
+            double distance = 0;
 
             // TODO: Add the Geolocation library to enable location comparisons: using GeoCoordinatePortable;
             // Look up what methods you have access to within this library.
 
             // NESTED LOOPS SECTION----------------------------
-            
+
             // FIRST FOR LOOP -
             // TODO: Create a loop to go through each item in your collection of locations.
             // This loop will let you select one location at a time to act as the "starting point" or "origin" location.
             // Naming suggestion for variable: `locA`
+            foreach (var l in locations)
+            {
+                var corA = new GeoCoordinate(l.Location.Latitude, l.Location.Longitude);
+
+                foreach (var c in locations)
+                {
+                    var corB = new GeoCoordinate(c.Location.Latitude, c.Location.Longitude);
+                    var total = corA.GetDistanceTo(corB);
+
+                    if (total > distance)
+                    {
+                        distance = total;
+                        point1 = l;
+                        point2 = c;
+                    }
+                }
+            }
 
             // TODO: Once you have locA, create a new Coordinate object called `corA` with your locA's latitude and longitude.
 
@@ -64,9 +84,10 @@ namespace LoggingKata
 
             // Once you've looped through everything, you've found the two Taco Bells farthest away from each other.
             // Display these two Taco Bell locations to the console.
+            Console.WriteLine($"Here are the locations of the two taco bells farthest away from each other Taco Bell 1:{point1.Name},{point1.Location.Latitude}, {point1.Location.Longitude} Taco Bell 2:{point2.Name},{point2.Location.Latitude}, {point2.Location.Longitude}");
 
 
-            
+
         }
     }
 }
